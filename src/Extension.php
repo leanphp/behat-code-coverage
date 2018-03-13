@@ -82,7 +82,16 @@ class Extension implements ExtensionInterface
         $container->setParameter('behat.code_coverage.config.delete', $config['delete']);
         $container->setParameter('behat.code_coverage.config.drivers', $config['drivers']);
         $container->setParameter('behat.code_coverage.config.filter', $config['filter']);
-        $container->setParameter('behat.code_coverage.config.report', $config['report']);
+
+        if(isset($config['report'])) {
+            $container->setParameter('behat.code_coverage.config.report', $config['report']);
+        }elseif(isset($config['format']) && isset($config['output'])) {
+            $container->setParameter('behat.code_coverage.config.report', array(
+                'format' => $config['format'],
+                'output' => $config['output']
+            ));
+        }
+
     }
 
     /**
@@ -186,6 +195,31 @@ class Extension implements ExtensionInterface
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')->end()
                         ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('format')
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('output')
+                    ->children()
+                        ->scalarNode('clover')
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->scalarNode('crap4j')
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->arrayNode('html')
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->scalarNode('php')->end()
+                        ->arrayNode('text')
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->scalarNode('xml')->end()
                     ->end()
                 ->end()
             ->end()
