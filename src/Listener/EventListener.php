@@ -13,7 +13,7 @@ use Behat\Behat\EventDispatcher\Event\ScenarioTested;
 use Behat\Testwork\EventDispatcher\Event\ExerciseCompleted;
 use LeanPHP\Behat\CodeCoverage\Service\ReportService;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use SebastianBergmann\CodeCoverage\Filter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -41,7 +41,15 @@ class EventListener implements EventSubscriberInterface
      */
     public function __construct(CodeCoverage $coverage, ReportService $reportService)
     {
-        $this->coverage      = $coverage;
+        $filter = new Filter();
+        $config = $reportService->getConfig();
+
+        $this->addDirectoryToWhitelist($config, $filter);
+        $this->addFileToWhitelist($config, $filter);
+
+        $cc = new CodeCoverage(null, $filter);
+
+        $this->coverage = $cc;
         $this->reportService = $reportService;
     }
 
@@ -101,5 +109,27 @@ class EventListener implements EventSubscriberInterface
     public function afterExercise(ExerciseCompleted $event)
     {
         $this->reportService->generateReport($this->coverage);
+    }
+
+    /**
+     * @param array  $config
+     * @param Filter $filter
+     */
+    private function addDirectoryToWhitelist(array $config, Filter $filter): void
+    {
+        foreach ($config['filter']['whitelist']['include']['directories'] as $directory) {
+            $filter->addDirectoryToWhitelist($directory['prefix']);
+        }
+    }
+
+    /**
+     * @param array  $config
+     * @param Filter $filter
+     */
+    private function addFileToWhitelist(array $config, Filter $filter): void
+    {
+        foreach ($config['filter']['whitelist']['include']['files'] as $file) {
+            $filter->addFileToWhitelist($file['prefix']);
+        }
     }
 }

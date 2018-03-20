@@ -43,7 +43,22 @@ default:
       auth:       ~
       drivers:
         - local
-      filter:     ~
+      filter:
+        forceCoversAnnotation:                true
+        mapTestClassNameToCoveredClassName:   true
+        whitelist:
+          addUncoveredFilesFromWhitelist:     true
+          processUncoveredFilesFromWhitelist: true
+          include:
+            directories:
+              'src':
+                prefix: 'src'
+              'tests':
+                prefix: 'src'
+          exclude:
+            directories:
+              'vendor':
+                prefix: 'vendor'
       report:
         format:   html
         options:
@@ -122,7 +137,7 @@ default:
 - `delete` (`method` / `path`) - *TBA*.
 - `drivers` - a list of drivers for gathering code coverage data:
     - `remote` - remote Xdebug driver.
-    - `local` - local Xdebug driver. 
+    - `local` - local Xdebug driver.
 - `filter` - various filter options:
     - `forceCoversAnnotation` - *TBA*
     - `mapTestClassNameToCoveredClassName` - *TBA*

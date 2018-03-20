@@ -53,4 +53,13 @@ class ReportService
         $report = $this->factory->create($format, $options);
         $report->process($coverage);
     }
+
+    /**
+     * @return array
+     */
+    public function getConfig(): array
+    {
+        return $this->config;
+    }
+
 }
