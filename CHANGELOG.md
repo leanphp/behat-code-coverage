@@ -8,9 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 3.1.x-dev
 
-- Cleaned up defaults for whitelisting files
+- Fixed a bug where a suffix when whitelisting files would default to `src`.
+  This would make reports not generate in case no `suffix` was defined in
+  configuration (see #28)
 - Updated README to list all configuration options
-- Updated `behat.yml.dist` so that it can be used as a proper example
+- Updated `behat.yml.dist`
 
 ## [3.1.0] - 2017-10-17 - Legacy maintenance release
 
