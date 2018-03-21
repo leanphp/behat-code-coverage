@@ -73,12 +73,6 @@
             <tag name="behat.code_coverage.driver" alias="remote" />
         </service>
 
-        <service id="behat.code_coverage.listener.event" class="%behat.code_coverage.listener.event.class%">
-            <argument type="service" id="behat.code_coverage.php_code_coverage" />
-            <argument type="service" id="behat.code_coverage.service.report" />
-            <tag name="event_dispatcher.subscriber" />
-        </service>
-
         <service id="behat.code_coverage.service.report_factory" class="%behat.code_coverage.service.report_factory.class%" />
 
         <service id="behat.code_coverage.service.report" class="%behat.code_coverage.service.report.class%">

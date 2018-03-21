@@ -9,11 +9,14 @@
 
 namespace LeanPHP\Behat\CodeCoverage;
 
+use Behat\Testwork\Cli\ServiceContainer\CliExtension;
 use Behat\Testwork\ServiceContainer\Extension as ExtensionInterface;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use LeanPHP\Behat\CodeCoverage\Compiler;
 
@@ -24,6 +27,10 @@ use LeanPHP\Behat\CodeCoverage\Compiler;
  */
 class Extension implements ExtensionInterface
 {
+    
+    const COVERAGE_CODE_COVERAGE = 'behat.code_coverage.php_code_coverage';
+    const COVERAGE_REPORT = 'behat.code_coverage.service.report';
+    
     /**
      * @var string
      */
@@ -51,6 +58,8 @@ class Extension implements ExtensionInterface
      */
     public function load(ContainerBuilder $container, array $config)
     {
+        $this->loadController($container);
+
         $loader = new XmlFileLoader($container, new FileLocator($this->configFolder));
 
         $servicesFile = 'services.xml';
@@ -206,11 +215,19 @@ class Extension implements ExtensionInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $passes = $this->getCompilerPasses();
+        //Controller handles the process.
+    }
 
-        foreach ($passes as $pass) {
-            $pass->process($container);
-        }
+    public function loadController(ContainerBuilder $container)
+    {
+        $definition = new Definition('\LeanPHP\Behat\CodeCoverage\CoverageController', array(
+            $container,
+            new Reference(self::COVERAGE_CODE_COVERAGE),
+            new Reference(self::COVERAGE_REPORT),
+            $this->getCompilerPasses()
+        ));
+        $definition->addTag(CliExtension::CONTROLLER_TAG, array('priority' => 80000));
+        $container->setDefinition(CliExtension::CONTROLLER_TAG . '.coverage', $definition);
     }
 
     /**
