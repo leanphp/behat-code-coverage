@@ -6,6 +6,12 @@ documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.x-dev
+
+- Cleaned up defaults for whitelisting files
+- Updated README to list all configuration options
+- Updated `behat.yml.dist` so that it can be used as a proper example
+
 ## [3.1.0] - 2017-10-17 - Legacy maintenance release
 
 - Update PHP requirement to `>=5.6` (from `>=5.3.10`)
