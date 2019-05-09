@@ -26,6 +26,7 @@
         <parameter key="vipsoft.code_coverage.driver.hhmv.class">LeanPHP\Behat\CodeCoverage\Common\Driver\HHVM</parameter>
         <parameter key="vipsoft.code_coverage.driver.xcache.class">LeanPHP\Behat\CodeCoverage\Common\Driver\XCache</parameter>
         <parameter key="vipsoft.code_coverage.driver.xdebug.class">SebastianBergmann\CodeCoverage\Driver\Xdebug</parameter>
+        <parameter key="vipsoft.code_coverage.driver.phpdbg.class">SebastianBergmann\CodeCoverage\Driver\PHPDBG</parameter>
         <parameter key="vipsoft.code_coverage.driver.factory.class">LeanPHP\Behat\CodeCoverage\Common\Driver\Factory</parameter>
     </parameters>
 
@@ -49,6 +50,11 @@
         </service>
         <service id="vipsoft.code_coverage.driver.xdebug"
                  class="%vipsoft.code_coverage.driver.xdebug.class%"
+                 synthetic="true">
+            <tag name="vipsoft.code_coverage.driver"/>
+        </service>
+        <service id="vipsoft.code_coverage.driver.phpdbg"
+                 class="%vipsoft.code_coverage.driver.phpdbg.class%"
                  synthetic="true">
             <tag name="vipsoft.code_coverage.driver"/>
         </service>
