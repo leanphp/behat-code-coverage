@@ -53,7 +53,7 @@
                  synthetic="true">
             <tag name="vipsoft.code_coverage.driver"/>
         </service>
-        <service id="vipsoft.code_coverage.driver.xdebug"
+        <service id="vipsoft.code_coverage.driver.phpdbg"
                  class="%vipsoft.code_coverage.driver.phpdbg.class%"
                  synthetic="true">
             <tag name="vipsoft.code_coverage.driver"/>
