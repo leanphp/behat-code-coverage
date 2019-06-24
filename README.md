@@ -70,7 +70,7 @@ If you execute `bin/behat` command, you will see code coverage generated in
 This extension now supports [phpdbg][6], which results in faster execution when
 using more recent versions of PHP. Run `phpspec` via [phpdbg][6]:
 
-    $ phpdbg -qrr bin/behat run
+    $ phpdbg -qrr bin/behat
 
 ## Configuration
 
