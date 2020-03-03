@@ -53,7 +53,11 @@ class Php implements ReportInterface
         } else {
             $slot = '1';
         }
+
+        $suite = getenv('BEHAT_PHING_TARGET') ? getenv('BEHAT_PHING_TARGET') : 'default';
+
         $this->options['target'] = str_replace('{n}', $slot, $this->options['target']);
+        $this->options['target'] = str_replace('{suite}', $suite, $this->options['target']);
 
         return $this->report->process(
             $coverage,
