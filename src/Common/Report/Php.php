@@ -48,6 +48,17 @@ class Php implements ReportInterface
      */
     public function process(CodeCoverage $coverage)
     {
+        if (getenv('ENV_TEST_INC_NUMBER')) {
+            $slot = getenv('ENV_TEST_INC_NUMBER');
+        } else {
+            $slot = '1';
+        }
+
+        $suite = getenv('BEHAT_PHING_TARGET') ? getenv('BEHAT_PHING_TARGET') : 'default';
+
+        $this->options['target'] = str_replace('{n}', $slot, $this->options['target']);
+        $this->options['target'] = str_replace('{suite}', $suite, $this->options['target']);
+
         return $this->report->process(
             $coverage,
             $this->options['target']

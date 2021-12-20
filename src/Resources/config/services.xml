@@ -23,6 +23,7 @@
             <parameter key="report">%behat.code_coverage.config.report%</parameter>
         </parameter>
 
+        <parameter key="vipsoft.code_coverage.driver.phpdbg.class">SebastianBergmann\CodeCoverage\Driver\PHPDBG</parameter>
         <parameter key="vipsoft.code_coverage.driver.hhmv.class">LeanPHP\Behat\CodeCoverage\Common\Driver\HHVM</parameter>
         <parameter key="vipsoft.code_coverage.driver.xcache.class">LeanPHP\Behat\CodeCoverage\Common\Driver\XCache</parameter>
         <parameter key="vipsoft.code_coverage.driver.xdebug.class">SebastianBergmann\CodeCoverage\Driver\Xdebug</parameter>
@@ -37,6 +38,11 @@
             <tag name="cli.controller" priority="80000" />
         </service>
 
+        <service id="vipsoft.code_coverage.driver.phpdbg"
+                 class="%vipsoft.code_coverage.driver.phpdbg.class%"
+                 synthetic="true">
+            <tag name="vipsoft.code_coverage.driver"/>
+        </service>
         <service id="vipsoft.code_coverage.driver.hhmv"
                  class="%vipsoft.code_coverage.driver.hhmv.class%"
                  synthetic="true">
